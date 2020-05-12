@@ -88,6 +88,7 @@ void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *current = *stack;
 
+	line_number += 1;
 	if (*stack == NULL)
 		return;
 
@@ -96,4 +97,44 @@ void pall(stack_t **stack, unsigned int line_number)
 		printf("%i\n", current->n);
 		current = current->next;
 	}
+}
+
+/**
+ * pint - print the first integer in the stack
+ * @stack: Head of the stack
+ * @line_number: Number of the line the arguments were read from
+ */
+void pint(stack_t **stack, unsigned int line_number)
+{
+	if (*stack == NULL)
+	{
+		dprintf(STDERR_FILENO, "L%u: can't pint, stack empty\n",
+			line_number);
+		clean_exit(EXIT_FAILURE, *stack);
+	}
+
+	printf("%i\n", (*stack)->n);
+}
+
+/**
+ * pop - remove the element at the top of the stack
+ * @stack: Head of the stack
+ * @line_number: Number of the line the arguments were read from
+ */
+void pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp = *stack;
+
+	if (*stack == NULL)
+	{
+		dprintf(STDERR_FILENO, "L%u: can't pop an empty stack\n",
+			line_number);
+		clean_exit(EXIT_FAILURE, *stack);
+	}
+
+	*stack = tmp->next;
+	free(tmp);
+
+	if (*stack != NULL)
+		(*stack)->prev = NULL;
 }

@@ -11,7 +11,7 @@ FILE *file_stream = NULL;
  */
 int main(int argc, char *argv[])
 {
-	unsigned int line_number = 1, buffer_size = 1024;
+	unsigned int line_number = 0, buffer_size = 1024;
 	int stack_mode = 1;
 	char buffer[1024];
 	char **args;
@@ -31,15 +31,16 @@ int main(int argc, char *argv[])
 
 	while (fgets(buffer, buffer_size, file_stream))
 	{
-		if (buffer[0] == '#')
-			continue;
+		line_number++;
 		args = _strtok(buffer, stack);
 		if (args == NULL)
 			continue;
-
+		if (args[0][0] == '#')
+		{
+			free_array(args);
+			continue;
+		}
 		perform_op(args, &stack, line_number, &stack_mode);
-		free_array(args);
-		line_number++;
 	}
 	fclose(file_stream);
 	free_stack(stack);
@@ -71,6 +72,8 @@ void clean_exit(int status, stack_t *stack)
  */
 void perform_op(char **args, stack_t **stack, unsigned int line, int *mode)
 {
+	void (*func_ptr)(stack_t **stack, unsigned int line_number);
+
 	if (strcmp(args[0], "push") == 0 && *mode == 1)
 		stack_push(stack, args, line);
 	else if (strcmp(args[0], "push") == 0 && *mode == 0)
@@ -79,9 +82,10 @@ void perform_op(char **args, stack_t **stack, unsigned int line, int *mode)
 		*mode = 1;
 	else if (strcmp(args[0], "queue") == 0 && *mode == 1)
 		*mode = 0;
-	else
+	else if (strcmp(args[0], "nop") != 0)
 	{
-		if (get_op_func(args[0]) == NULL)
+		func_ptr = get_op_func(args[0]);
+		if (func_ptr == NULL)
 		{
 			dprintf(STDERR_FILENO, "L%u: unkown instruction %s\n",
 				line, args[0]);
@@ -89,9 +93,13 @@ void perform_op(char **args, stack_t **stack, unsigned int line, int *mode)
 			clean_exit(EXIT_FAILURE, *stack);
 		}
 		else
-			get_op_func(args[0])(stack, line);
+		{
+			free_array(args);
+			func_ptr(stack, line);
+			return;
+		}
 	}
-
+	free_array(args);
 }
 
 /**
@@ -104,6 +112,18 @@ void (*get_op_func(char *op_code))(stack_t **stack, unsigned int line_number)
 	int index = 0;
 	instruction_t funcs[] = {
 		{"pall", pall},
+		{"pint", pint},
+		{"pop", pop},
+		{"swap", swap},
+		{"add", add},
+		{"sub", sub},
+		{"mul", mul},
+		{"div", divide},
+		{"mod", mod},
+		{"pchar", pchar},
+		{"pstr", pstr},
+		{"rotl", rotl},
+		{"rotr", rotr},
 		{NULL, NULL}
 	};
 
@@ -111,7 +131,7 @@ void (*get_op_func(char *op_code))(stack_t **stack, unsigned int line_number)
 	{
 		if (strcmp(funcs[index].opcode, op_code) == 0)
 			return (*(funcs + index)->f);
+		index++;
 	}
-
 	return (NULL);
 }
