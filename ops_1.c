@@ -24,6 +24,7 @@ void stack_push(stack_t **head, char **args, unsigned int line_number)
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
+		free_array(args);
 		dprintf(STDERR_FILENO, "Error: malloc failed\n");
 		clean_exit(EXIT_FAILURE, *head);
 	}
@@ -60,6 +61,7 @@ void queue_push(stack_t **head, char **args, unsigned int line_number)
 	new_node = malloc(sizeof(stack_t));
 	if (new_node == NULL)
 	{
+		free_array(args);
 		dprintf(STDERR_FILENO, "Error: malloc failed\n");
 		clean_exit(EXIT_FAILURE, *head);
 	}
