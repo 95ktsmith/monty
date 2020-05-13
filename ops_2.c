@@ -33,7 +33,7 @@ void swap(stack_t **stack, unsigned int line_number)
  */
 void add(stack_t **stack, unsigned int line_number)
 {
-	stack_t *tmp = *stack, *tmp_next = tmp->next;
+	stack_t *tmp = *stack, *tmp_next;
 
 	if (stack == NULL || stack_len(*stack) < 2)
 	{
@@ -42,6 +42,7 @@ void add(stack_t **stack, unsigned int line_number)
 		clean_exit(EXIT_FAILURE, *stack);
 	}
 
+	tmp_next = tmp->next;
 	tmp_next->n += tmp->n;
 	free(tmp);
 	tmp_next->prev = NULL;
