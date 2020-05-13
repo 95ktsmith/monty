@@ -11,13 +11,13 @@ FILE *file_stream = NULL;
  */
 int main(int argc, char *argv[])
 {
-	unsigned int line_number = 0, buffer_size = 1024;
+	unsigned int line_number = 0;
 	int stack_mode = 1;
 	char buffer[1024];
 	char **args;
 	stack_t *stack = NULL;
 
-	if (argc != 2)
+	if (argc < 2)
 	{
 		dprintf(STDERR_FILENO, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	while (fgets(buffer, buffer_size, file_stream))
+	while (fgets(buffer, 1024, file_stream))
 	{
 		line_number++;
 		args = _strtok(buffer, stack);
