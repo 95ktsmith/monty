@@ -98,7 +98,7 @@ void divide(stack_t **stack, unsigned int line_number)
 {
 	if (stack == NULL || stack_len(*stack) < 2)
 	{
-		dprintf(STDERR_FILENO, "L%u: can't mul, stack too short\n",
+		dprintf(STDERR_FILENO, "L%u: can't div, stack too short\n",
 			line_number);
 		clean_exit(EXIT_FAILURE, *stack);
 	}
