@@ -13,7 +13,7 @@ void stack_push(stack_t **head, char **args, unsigned int line_number)
 	if (head == NULL)
 		return;
 
-	if (args[1] == NULL || (atoi(args[1]) == 0 && args[1][0] != '0'))
+	if (args[1] == NULL || !is_int(args[1]))
 	{
 		dprintf(STDERR_FILENO, "L%u: usage: push integer\n",
 			line_number);
@@ -49,7 +49,7 @@ void queue_push(stack_t **head, char **args, unsigned int line_number)
 	if (head == NULL)
 		return;
 
-	if (args[1] == NULL || (atoi(args[1]) == 0 && args[1][0] != '0'))
+	if (args[1] == NULL || !is_int(args[1]))
 	{
 		dprintf(STDERR_FILENO, "L%u: usage: push integer\n",
 			line_number);

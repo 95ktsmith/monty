@@ -43,6 +43,7 @@ extern FILE *file_stream;
 void clean_exit(int status, stack_t *stack);
 void perform_op(char **args, stack_t **stack, unsigned int line, int *mode);
 void (*get_op_func(char *op_code))(stack_t **stack, unsigned int line_number);
+int is_int(char *str);
 
 /* In _strtok.c */
 char **_strtok(char *str, stack_t *stack);

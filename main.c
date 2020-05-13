@@ -136,3 +136,26 @@ void (*get_op_func(char *op_code))(stack_t **stack, unsigned int line_number)
 	}
 	return (NULL);
 }
+
+/**
+ * is_int - checks if a string has only numerical characters
+ * @str: String to check
+ * Return: 1 if the string contains only numerical characters, or has a leading
+ *         sign, and 0 if it contains any other characters.
+ */
+int is_int(char *str)
+{
+	int index = 0;
+
+	while (str[index])
+	{
+		if (str[index] < '0' || str[index] > '9')
+		{
+			if (index != 0 ||
+			!(str[index] != '-' || str[index] != '+'))
+				return (0);
+		}
+		index++;
+	}
+	return (1);
+}
