@@ -58,7 +58,7 @@ char **_strtok(char *str, stack_t *stack)
 	if (token_count(str) == 0)
 		return (NULL);
 	tokens = malloc((token_count(str) + 1) * sizeof(char *));
-	if (!tokens)
+	if (tokens == NULL)
 	{
 		dprintf(STDERR_FILENO, "Error: malloc failed\n");
 		clean_exit(EXIT_FAILURE, stack);
@@ -73,7 +73,7 @@ char **_strtok(char *str, stack_t *stack)
 				!strchr(" \n", str[token_len + s_index]))
 				token_len++;
 			tokens[t_index] = malloc(token_len + 1);
-			if (!tokens[t_index])
+			if (tokens[t_index] == NULL)
 			{
 				dprintf(STDERR_FILENO,
 					"Error: malloc failed\n");
