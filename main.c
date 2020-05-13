@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 	}
 	fclose(file_stream);
 	free_stack(stack);
+	exit(EXIT_SUCCESS);
 	return (0);
 }
 
