@@ -151,8 +151,7 @@ int is_int(char *str)
 	{
 		if (str[index] < '0' || str[index] > '9')
 		{
-			if (index != 0 ||
-			!(str[index] != '-' || str[index] != '+'))
+			if (index != 0 || str[index] != '-')
 				return (0);
 		}
 		index++;
