@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
 		dprintf(STDERR_FILENO, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
+
 	file_stream = fopen(argv[1], "r");
 	if (file_stream == NULL)
 	{
@@ -88,7 +89,7 @@ void perform_op(char **args, stack_t **stack, unsigned int line, int *mode)
 		func_ptr = get_op_func(args[0]);
 		if (func_ptr == NULL)
 		{
-			dprintf(STDERR_FILENO, "L%u: unkown instruction %s\n",
+			dprintf(STDERR_FILENO, "L%u: unknown instruction %s\n",
 				line, args[0]);
 			free_array(args);
 			clean_exit(EXIT_FAILURE, *stack);
