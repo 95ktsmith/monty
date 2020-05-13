@@ -22,7 +22,7 @@ void swap(stack_t **stack, unsigned int line_number)
 	tmp->next = (*stack)->next;
 	(*stack)->prev = NULL;
 	(*stack)->next = tmp;
-	if((*stack)->next != NULL)
+	if ((*stack)->next != NULL)
 		(*stack)->next->prev = tmp;
 }
 
