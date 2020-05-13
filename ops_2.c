@@ -38,8 +38,8 @@ void add(stack_t **stack, unsigned int line_number)
 		clean_exit(EXIT_FAILURE, *stack);
 	}
 
+	(*stack)->next->n += (*stack)->n;
 	*stack = (*stack)->next;
-	(*stack)->n += (*stack)->prev->n;
 	free((*stack)->prev);
 	(*stack)->prev = NULL;
 }
